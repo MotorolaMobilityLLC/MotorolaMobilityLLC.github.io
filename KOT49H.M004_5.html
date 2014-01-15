@@ -1,0 +1,50 @@
+  <h3>KOT49H.M004_5 for Moto G (&#8220;Falcon&#8221;) Google Play edition</h3>
+
+  <p>Source located <a href="https://github.com/MotorolaMobilityLLC">here</a></p>
+
+  <h4>Published with tag KOT49H.M004_5: (4.4.2 Launch version)</h4>
+
+  <ul>
+    <li>bionic</li>
+    <li>external/chromium_org</li>
+    <li>external/clang</li>
+    <li>external/compiler-rt</li>
+    <li>external/dnsmasq</li>
+    <li>external/gcc-demangle</li>
+    <li>external/hyphenation</li>
+    <li>external/iproute2</li>
+    <li>external/iptables</li>
+    <li>external/jdiff</li>
+    <li>external/libcap-ng</li>
+    <li>external/libnl-headers</li>
+    <li>kernel</li>
+    <li>motorola/external/f2fs-tools</li>
+    <li>motorola/external/wbxmlparser</li>
+    <li>motorola/security/moto_crypto</li>
+    <li>system/core</li>
+    <li>vendor/qcom/opensource/wlan/prima</li>
+  </ul>
+
+  <h4>Sample Usage:</h4>
+
+  <p>1. Create a workspace containing &#8220;vanilla&#8221; KitKat release from Google.</p>
+
+  <p>2. Replace the Android repos corresponding to the Motorola-published repos.</p>
+
+  <p>3. Building kernel and kernel modules:</p>
+
+<pre><code>my_top_dir=$PWD
+mkdir -p $PWD/out/target/product/generic/obj/kernel
+cross=$my_top_dir/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin/arm-eabi-
+kernel_out_dir=$PWD/out/target/product/generic/obj/kernel
+</code></pre>
+
+<pre><code>cat kernel/arch/arm/configs/msm8226_defconfig &gt; $kernel_out_dir/mapphone_defconfig
+cp $kernel_out_dir/mapphone_defconfig $kernel_out_dir/.config
+make -j32 -C kernel ARCH=arm CROSS_COMPILE=$cross O=$kernel_out_dir defoldconfig
+make -j32 -C kernel ARCH=arm CROSS_COMPILE=$cross O=$kernel_out_dir headers_install
+make -j32 -C kernel ARCH=arm CROSS_COMPILE=$cross O=$kernel_out_dir
+make -j32 -C kernel ARCH=arm CROSS_COMPILE=$cross O=$kernel_out_dir dtbs
+make -j32 -C kernel ARCH=arm CROSS_COMPILE=$cross O=$kernel_out_dir modules
+make -j32 -C kernel ARCH=arm CROSS_COMPILE=$cross O=$kernel_out_dir INSTALL_MOD_PATH=$PWD/out/target/product/generic modules_install
+</code></pre>
